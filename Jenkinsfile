@@ -50,4 +50,7 @@ pipeline {
     }
 
   }
+  tools {
+    maven 'mvn'
+  }
 }
