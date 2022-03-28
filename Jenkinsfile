@@ -36,12 +36,8 @@ pipeline {
 
     stage('Quality Gate') {
       steps {
-        script {
-          def qualitygate = waitForQualityGate()
-          sleep(10)
-          if (qualitygate.status != "OK") {
-            waitForQualityGate abortPipeline: true
-          }
+        timeout(time: 2, unit: 'MINUTES') {
+          waitForQualityGate true
         }
 
       }
@@ -82,6 +78,12 @@ pipeline {
     stage('Asking for manual approval') {
       steps {
         input(message: 'Approve the deployment', ok: 'yes')
+      }
+    }
+
+    stage('Push to artifactory') {
+      steps {
+        nexusArtifactUploader(artifacts: [[artifactId: '$BUILD_NUMBER', classifier: '', file: 'helloworld-project/helloworld-ws/target/helloworld-ws-sources.jar', type: 'tar.gz']], credentialsId: 'nexus', groupId: 'dchichikalov', nexusUrl: '192.168.49.1:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'ft', version: '1.0')
       }
     }
 
