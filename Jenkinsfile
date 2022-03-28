@@ -26,6 +26,7 @@ pipeline {
             -Dsonar.projectKey=final \
             -Dsonar.projectName=final \
             -Dsonar.sources=helloworld-project/helloworld-ws/src/main/java/org/jboss/as/quickstarts/wshelloworld/ \
+            -Dsonar.java.binaries=**/target/classes \
             -Dsonar.tests=helloworld-project/helloworld-ws/src/test/java/org/jboss/as/quickstarts/wshelloworld/"
           }
         }
