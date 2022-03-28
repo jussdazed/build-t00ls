@@ -20,8 +20,8 @@ pipeline {
       steps {
         script {
           def scannerHome = tool 'sonar';
-          withSonarQubeEnv('sonar') {
-            sh "/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner -Dsonar.host.url=http://192.168.49.1:9000/ -Dsonar.projectKey=final -Dsonar.projectName=final"
+          withSonarQubeEnv('sonarqube') {
+            sh "${tool("sonar")}bin/sonar-scanner -Dsonar.host.url=http://192.168.49.1:9000/ -Dsonar.projectKey=final -Dsonar.projectName=final"
           }
         }
 
@@ -30,8 +30,12 @@ pipeline {
 
     stage('Quality Gate') {
       steps {
-        timeout(time: 2, unit: 'MINUTES') {
-          waitForQualityGate true
+        script {
+          def qualitygate = waitForQualityGate()
+          sleep(10)
+          if (qualitygate.status != "OK") {
+            waitForQualityGate abortPipeline: true
+          }
         }
 
       }
