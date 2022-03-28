@@ -20,7 +20,7 @@ pipeline {
       steps {
         script {
           def scannerHome = tool 'sonar';
-          withSonarQubeEnv('sonarqube') {
+          withSonarQubeEnv('sonar') {
             sh "${tool("sonar")}bin/sonar-scanner -Dsonar.host.url=http://192.168.49.1:9000/ -Dsonar.projectKey=final -Dsonar.projectName=final"
           }
         }
