@@ -21,7 +21,7 @@ pipeline {
         script {
           def scannerHome = tool 'sonar';
           withSonarQubeEnv('sonar') {
-            sh "${tool("sonar")}/bin/sonar-scanner -Dsonar.projectKey=final -Dsonar.projectName=final "
+            sh "/var/jenkins_home/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonar/bin/sonar-scanner -Dsonar.host.url=http://192.168.49.1:9000/ -Dsonar.projectKey=final -Dsonar.projectName=final"
           }
         }
 
@@ -38,9 +38,32 @@ pipeline {
     }
 
     stage('Testing') {
-      steps {
-        dir(path: 'helloworld-project/helloworld-ws/') {
-          sh 'mvn test'
+      parallel {
+        stage('pre-integration-test') {
+          steps {
+            dir(path: 'helloworld-project/helloworld-ws/') {
+              sh 'mvn pre-integration-test '
+            }
+
+          }
+        }
+
+        stage('integration-test') {
+          steps {
+            dir(path: 'helloworld-project/helloworld-ws/') {
+              sh 'echo mvn integration-test '
+            }
+
+          }
+        }
+
+        stage('post-integration-test') {
+          steps {
+            dir(path: 'helloworld-project/helloworld-ws/') {
+              sh 'echo mvn post-integration-test'
+            }
+
+          }
         }
 
       }
@@ -55,5 +78,10 @@ pipeline {
   }
   tools {
     maven 'mvn'
+  }
+  environment {
+    registryCredentials = 'nexus'
+    registry = 'http://192.168.49.1:8081'
+    sonarCredentials = 'sonar'
   }
 }
