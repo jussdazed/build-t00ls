@@ -21,7 +21,7 @@ pipeline {
         script {
           def scannerHome = tool 'sonar';
           withSonarQubeEnv('sonar') {
-            sh "${tool("sonar")}bin/sonar-scanner -Dsonar.host.url=http://192.168.49.1:9000/ -Dsonar.projectKey=final -Dsonar.projectName=final"
+            sh "${tool("sonar")}/bin/sonar-scanner -Dsonar.host.url=http://192.168.49.1:9000/ -Dsonar.projectKey=final -Dsonar.projectName=final"
           }
         }
 
