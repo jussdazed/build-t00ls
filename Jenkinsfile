@@ -88,7 +88,7 @@ pipeline {
                                             nexusUrl: '192.168.49.1:8081', 
                                             nexusVersion: 'nexus3', 
                                             protocol: 'http', 
-                                            repository: 'arts', 
+                                            repository: 'arts/', 
                                             version: '${JOB_NAME}'
         }
       }
