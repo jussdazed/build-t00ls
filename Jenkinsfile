@@ -92,6 +92,20 @@ pipeline {
                                             version: '${JOB_NAME}'
         }
       }
+      stage('Creating Docker Image') {
+        steps{
+          dir('helloworld-project/helloworld-ws/') {
+            script {
+              dockerImage = docker.build "ft"
+            }
+          }
+            script {
+              docker.withRegistry( 'http://192.168.49.1:8081', "nexus" ) {
+                dockerImage.push("${env.BUILD_NUMBER}")
+              }
+            }
+        }
+      }
     }
 
   tools {
