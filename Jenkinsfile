@@ -10,7 +10,7 @@ pipeline {
       stage('Building Code') {
         steps {
           dir(path: 'helloworld-project/helloworld-ws/') {
-            sh 'mvn package -DskipTests'
+            sh 'mvn package'
           }
         }
       }
