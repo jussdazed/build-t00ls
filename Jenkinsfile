@@ -97,3 +97,4 @@ pipeline {
   tools {
     maven 'mvn'
   }
+}
