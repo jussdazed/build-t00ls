@@ -73,7 +73,7 @@ pipeline {
         }
       }
 
-      stage('Asking for manual approval') {
+      stage('Asking for approval') {
         steps {
           input(message: 'Approve the deployment', ok: 'yes')
         }
