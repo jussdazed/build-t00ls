@@ -92,7 +92,7 @@ pipeline {
                                             version: '${JOB_NAME}'
         }
       }
-      stage('Creating Docker imag and push') {
+      stage('Creating Docker image') {
         steps{
           dir('helloworld-project/helloworld-ws/') {
             script {
