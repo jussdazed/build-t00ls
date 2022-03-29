@@ -79,17 +79,7 @@ pipeline {
       }
       stage('Push to artifactory') {
         steps {
-          nexusArtifactUploader artifacts: [[artifactId: '${BUILD_NUMBER}',
-                                            classifier: '',
-                                            file: 'helloworld-project/helloworld-ws/target/helloworld-ws-sources.jar',
-                                            type: 'tar.gz']], 
-                                            credentialsId: 'nexus', 
-                                            groupId: 'dchichikalov', 
-                                            nexusUrl: '192.168.49.1:8081', 
-                                            nexusVersion: 'nexus3', 
-                                            protocol: 'http', 
-                                            repository: 'ft', 
-                                            version: '${JOB_NAME}'
+          nexusArtifactUploader artifacts: [[artifactId: '$BUILD_NUMBER', classifier: '', file: 'helloworld-project/helloworld-ws/target/helloworld-ws-sources.jar', type: 'tar.gz']], credentialsId: 'nexus', groupId: 'dchichikalov', nexusUrl: '192.168.49.1:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'ft', version: '${JOB_NAME}'
         }
       }
     }
